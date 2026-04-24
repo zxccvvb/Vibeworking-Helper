@@ -1,0 +1,142 @@
+{
+  "name": "vibeworking-helper",
+  "displayName": "Vibeworking-Helper",
+  "description": "面向 vibe coding 的 VSCode 提效插件，支持可视化管理 submodule 仓库、应用发现和 docs tasks。",
+  "version": "0.0.1",
+  "publisher": "mo9on",
+  "author": {
+    "name": "九月",
+    "url": "https://github.com/zxccvvb"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "localLife",
+          "title": "协作台",
+          "icon": "$(repo)"
+        }
+      ]
+    },
+    "views": {
+      "localLife": [
+        {
+          "id": "localLife.dashboard",
+          "name": "总览",
+          "type": "webview"
+        },
+        {
+          "id": "localLife.repositories",
+          "name": "仓库"
+        },
+        {
+          "id": "localLife.apps",
+          "name": "应用"
+        },
+        {
+          "id": "localLife.tasks",
+          "name": "任务"
+        },
+        {
+          "id": "localLife.documents",
+          "name": "文档"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "localLife.refresh",
+        "title": "刷新"
+      },
+      {
+        "command": "localLife.addRepository",
+        "title": "添加仓库"
+      },
+      {
+        "command": "localLife.initWorkspace",
+        "title": "初始化仓库"
+      },
+      {
+        "command": "localLife.openPath",
+        "title": "打开路径"
+      },
+      {
+        "command": "localLife.removeRepository",
+        "title": "卸载仓库"
+      },
+      {
+        "command": "localLife.removeApplication",
+        "title": "卸载应用"
+      },
+      {
+        "command": "localLife.restoreDocScope",
+        "title": "还原目录"
+      },
+      {
+        "command": "localLife.searchGitLabProjects",
+        "title": "搜索 GitLab 项目"
+      },
+      {
+        "command": "localLife.pullGitLabProjects",
+        "title": "拉取 GitLab 项目"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "localLife.refresh",
+          "when": "view =~ /^localLife\\./",
+          "group": "navigation"
+        },
+        {
+          "command": "localLife.initWorkspace",
+          "when": "view == localLife.dashboard",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "localLife.removeRepository",
+          "when": "view == localLife.repositories && viewItem == repo",
+          "group": "inline"
+        },
+        {
+          "command": "localLife.removeApplication",
+          "when": "view == localLife.apps && (viewItem == appRepository || viewItem == appWorkspace)",
+          "group": "inline"
+        },
+        {
+          "command": "localLife.restoreDocScope",
+          "when": "view == localLife.documents && viewItem == docScope",
+          "group": "inline"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "build": "npm run compile",
+    "watch": "tsc -watch -p ./",
+    "vsix": "npx @vscode/vsce package",
+    "version:patch": "npm version patch --no-git-tag-version --no-git-checks",
+    "version:minor": "npm version minor --no-git-tag-version --no-git-checks",
+    "version:major": "npm version major --no-git-tag-version --no-git-checks",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@types/vscode": "^1.95.0",
+    "typescript": "^5.9.3"
+  }
+}
